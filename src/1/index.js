@@ -22,7 +22,6 @@ function calculateTotalFuelRequired(massList) {
         return calculateFuelForMass(mass)
     });
 
-
     const sum = fuelList.reduce((acc, val) => {
         return acc + val;
     });
@@ -31,9 +30,10 @@ function calculateTotalFuelRequired(massList) {
 }
 
 function calculateFuelForMass(mass) {
-    const requiredFuel = Math.floor(mass / 3 - 2);
+    let requiredFuel = Math.floor(+mass / 3) - 2
+    requiredFuel > 0 ? requiredFuel += calculateFuelForMass(requiredFuel) : requiredFuel = 0
 
-    return requiredFuel;
+    return requiredFuel
 }
 
 let massList = processMassFile('./input')
