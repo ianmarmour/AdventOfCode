@@ -20,12 +20,39 @@ const opCodeListParser = (opCodeList, opCodeHandlers) => {
         try {
             opCodeList[resultElementLocation] = opCodeHandlerFunction(opCodeList[firstElementLocation], opCodeList[secondElementLocation])
         } catch {
-            console.log(opCodeList)
+            return opCodeList[0]
         }
 
         arrayPointer += 4
     }
 
+}
+
+function instructionChecker(opCodeList, opCodeHandlers) {
+
+    let noun = 0
+    let verb = 0
+
+    while(noun < 100) {
+        while(verb < 100) {
+            let startingMemory = [...opCodeList]
+            startingMemory[1] = noun
+            startingMemory[2] = verb
+            
+            let output = opCodeListParser(startingMemory, opCodeHandlers)
+
+            if(output == 19690720) {
+                console.log(noun)
+                console.log(verb)
+                break
+            }
+
+            verb += 1
+        }
+
+        verb = 0 
+        noun += 1
+    }
 }
 
 function processOpCodeList(inputFile) {
@@ -45,4 +72,4 @@ function processOpCodeList(inputFile) {
 }
 
 let opCodeList = processOpCodeList('./input')
-opCodeListParser(opCodeList, opCodeHandlers)
+instructionChecker(opCodeList, opCodeHandlers)
